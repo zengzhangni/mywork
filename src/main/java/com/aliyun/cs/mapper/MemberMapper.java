@@ -1,7 +1,7 @@
 package com.aliyun.cs.mapper;
 
 import com.aliyun.cs.model.Member;
-import com.aliyun.cs.util.BaseMapper;
+import com.aliyun.cs.utils.base.BaseMapper;
 
 /**
  * @author liyang

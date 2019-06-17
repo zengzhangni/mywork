@@ -1,9 +1,10 @@
 package com.aliyun.cs.controller;
 
-import com.aliyun.cs.config.redis.RedisService;
 import com.aliyun.cs.model.User;
 import com.aliyun.cs.service.UserService;
-import com.aliyun.cs.util.ResponseMessage;
+import com.aliyun.cs.utils.base.ResponseMessage;
+import com.aliyun.cs.utils.common.UUID;
+import com.aliyun.cs.vo.user.RegisterVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +23,8 @@ public class UserController {
 
     @Resource
     private UserService userService;
-    @Resource
-    private RedisService redisService;
+
+
 
     /**
      * 添加
@@ -52,21 +53,19 @@ public class UserController {
         return new ResponseMessage<>(this.userService.deleteObjById(1));
     }
 
-    /**
-     * 修改
-     */
-    @ApiOperation(value = "redis")
-    @GetMapping("/cs")
-    public ResponseMessage cs() {
-        User user = new User();
-        user.setUserUuid("147258");
-        user.setUserName("测试");
-        user.setUserPhone("159845678");
-        user.setUserPassword("awdad");
-        user.setUserImg("54654564564564");
-        user.setUserAge(20);
-        user.setUserBirthday(new Date());
-        redisService.set(user.getUserUuid(), user);
-        return new ResponseMessage<>("ok");
+
+    @GetMapping("/yzm/{phone}")
+    public ResponseMessage<String> yzm(@PathVariable(value = "phone") String phone) {
+        return this.userService.getYzm(phone);
     }
+
+    @PostMapping("/login")
+    public ResponseMessage<User> login(@RequestBody RegisterVo registerVo) {
+        return this.userService.login(registerVo);
+    }
+    @PostMapping("/register")
+    public ResponseMessage<User> register(@RequestBody RegisterVo registerVo) {
+        return this.userService.register(registerVo);
+    }
+
 }

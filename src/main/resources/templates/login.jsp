@@ -15,18 +15,19 @@
             $("#loginButton").click(function () {
                 var name = $("#nameInput").val();
                 var pwd = $("#pwdInput").val();
-                var str = {"name": name, "pwd": pwd}
+                var str = {"userPhone": name, "userPassword": pwd}
                 $.ajax({
                     type: "post",
-                    url: "/member/login",
+                    url: "/user/login",
                     contentType: "application/json",
                     dataType: "json",
                     data: JSON.stringify(str),
                     success: function (result) {
-                        if (result.code === 200) {
-                            location.href = "cs";
+                        if (result.message === "SUCCESS") {
+                            location.href = "index";
+                        } else {
+                            alert(result.message);
                         }
-                        console.debug(result);
                     }
                 });
             })

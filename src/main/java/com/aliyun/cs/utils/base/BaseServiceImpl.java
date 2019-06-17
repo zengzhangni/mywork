@@ -1,9 +1,7 @@
-package com.aliyun.cs.util;
+package com.aliyun.cs.utils.base;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * BaseService 实现

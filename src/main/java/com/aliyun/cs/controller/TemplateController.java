@@ -26,9 +26,5 @@ public class TemplateController {
         return "index";
     }
 
-    @GetMapping("cs")
-    public String csHtml() {
-        return "cs";
-    }
 
 }

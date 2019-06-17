@@ -18,9 +18,8 @@
             $("#sendButton").click(function () {
                 var name = $("#nameInput").val();
                 $.ajax({
-                    type: "post",
-                    url: "/member/yzm",
-                    data: {"phone": name},
+                    type: "get",
+                    url: "/user/yzm/" + name,
                     success: function (result) {
                         if (result.data != null) {
                             alert(result.data);
@@ -36,17 +35,18 @@
                 var pwd = $("#pwdInput").val();
                 var isPwd = $("#isPwdInput").val();
                 var yzm = $("#yzm").val();
-                var str = {"name": name, "pwd": pwd, "isPwd": isPwd, "yzm": yzm}
+                var str = {"userPhone": name, "userPassword": pwd, "yzm": yzm}
                 $.ajax({
                     type: "post",
-                    url: "/member/register",
+                    url: "/user/register",
                     contentType: "application/json",
                     dataType: "json",
                     data: JSON.stringify(str),
                     success: function (result) {
-                        if (result.data === "验证码正确") {
-                            location.href = "cs";
+                        if (result.message === "SUCCESS") {
+                            location.href = "index";
                         } else {
+                            alert(result.message);
                             $("#pwdInput").val(pwd);
                             $("#isPwdInput").val(isPwd);
                             $("#yzm").val(null);

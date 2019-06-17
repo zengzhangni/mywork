@@ -1,4 +1,4 @@
-package com.aliyun.cs.util;
+package com.aliyun.cs.utils.base;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;

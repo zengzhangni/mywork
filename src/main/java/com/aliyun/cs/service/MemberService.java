@@ -1,8 +1,8 @@
 package com.aliyun.cs.service;
 
 import com.aliyun.cs.model.Member;
-import com.aliyun.cs.util.ResponseMessage;
-import com.aliyun.cs.util.SpringCloudBaseService;
+import com.aliyun.cs.utils.base.ResponseMessage;
+import com.aliyun.cs.utils.base.SpringCloudBaseService;
 import com.github.pagehelper.PageInfo;
 
 /**
