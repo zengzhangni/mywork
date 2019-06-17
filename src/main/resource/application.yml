@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://139.196.206.94:3306/test?characterEncoding=utf8&useSSL=false&useLocalSessionState=true
+    username: root
+    password: adminzzn
+  thymeleaf:
+    suffix: .jsp
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+server:
+  port: 80

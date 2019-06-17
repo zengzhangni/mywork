@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aliyun.cs.mapper.MemberMapper">
+    <resultMap id="BaseResultMap" type="com.aliyun.cs.model.Member">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="platform_code" jdbcType="VARCHAR" property="platformCode"/>
+        <result column="member_name" jdbcType="VARCHAR" property="memberName"/>
+        <result column="member_nickname" jdbcType="VARCHAR" property="memberNickname"/>
+        <result column="member_uuid" jdbcType="VARCHAR" property="memberUuid"/>
+        <result column="login_name" jdbcType="VARCHAR" property="loginName"/>
+        <result column="login_password" jdbcType="VARCHAR" property="loginPassword"/>
+        <result column="register_phone" jdbcType="VARCHAR" property="registerPhone"/>
+        <result column="gender" jdbcType="TINYINT" property="gender"/>
+        <result column="member_img_url" jdbcType="VARCHAR" property="memberImgUrl"/>
+        <result column="person_signature" jdbcType="VARCHAR" property="personSignature"/>
+        <result column="birthday" jdbcType="TIMESTAMP" property="birthday"/>
+        <result column="member_level" jdbcType="VARCHAR" property="memberLevel"/>
+        <result column="member_type" jdbcType="INTEGER" property="memberType"/>
+        <result column="auth_status" jdbcType="INTEGER" property="authStatus"/>
+        <result column="member_status" jdbcType="INTEGER" property="memberStatus"/>
+        <result column="member_origin" jdbcType="INTEGER" property="memberOrigin"/>
+        <result column="is_enabled" jdbcType="TINYINT" property="isEnabled"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,
+        platform_code,
+        member_name,
+        member_nickname,
+        member_uuid,
+        login_name,
+        login_password,
+        register_phone,
+        gender,
+        member_img_url,
+        person_signature,
+        birthday,
+        member_level,
+        member_type,
+        auth_status,
+        member_status,
+        member_origin,
+        is_enabled,
+        create_time,
+        update_time
+    </sql>
+    <!-- 往表中插入一条数据 字段为空不插入 系统字段需要输入 -->
+    <insert id="insertSelective" parameterType="com.aliyun.cs.model.Member">
+        insert into
+        bm_member
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="platformCode != null">
+                platform_code,
+            </if>
+            <if test="memberName != null">
+                member_name,
+            </if>
+            <if test="memberNickname != null">
+                member_nickname,
+            </if>
+            <if test="memberUuid != null">
+                member_uuid,
+            </if>
+            <if test="loginName != null">
+                login_name,
+            </if>
+            <if test="loginPassword != null">
+                login_password,
+            </if>
+            <if test="registerPhone != null">
+                register_phone,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="memberImgUrl != null">
+                member_img_url,
+            </if>
+            <if test="personSignature != null">
+                person_signature,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="memberLevel != null">
+                member_level,
+            </if>
+            <if test="memberType != null">
+                member_type,
+            </if>
+            <if test="authStatus != null">
+                auth_status,
+            </if>
+            <if test="memberStatus != null">
+                member_status,
+            </if>
+            <if test="memberOrigin != null">
+                member_origin,
+            </if>
+            <if test="isEnabled != null">
+                is_enabled,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="platformCode != null">
+                #{platformCode,jdbcType=VARCHAR},
+            </if>
+            <if test="memberName != null">
+                #{memberName,jdbcType=VARCHAR},
+            </if>
+            <if test="memberNickname != null">
+                #{memberNickname,jdbcType=VARCHAR},
+            </if>
+            <if test="memberUuid != null">
+                #{memberUuid,jdbcType=VARCHAR},
+            </if>
+            <if test="loginName != null">
+                #{loginName,jdbcType=VARCHAR},
+            </if>
+            <if test="loginPassword != null">
+                #{loginPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="registerPhone != null">
+                #{registerPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=TINYINT},
+            </if>
+            <if test="memberImgUrl != null">
+                #{memberImgUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="personSignature != null">
+                #{personSignature,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=TIMESTAMP},
+            </if>
+            <if test="memberLevel != null">
+                #{memberLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="memberType != null">
+                #{memberType},
+            </if>
+            <if test="authStatus != null">
+                #{authStatus},
+            </if>
+            <if test="memberStatus != null">
+                #{memberStatus},
+            </if>
+            <if test="memberOrigin != null">
+                #{memberOrigin},
+            </if>
+            <if test="isEnabled != null">
+                #{isEnabled,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据主键查询数据 所有数据 -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        bm_member
+        where
+        id = #{id}
+    </select>
+
+    <!-- 分页用 查询所有数据 -->
+    <select id="selectListByConditions" parameterType="com.aliyun.cs.model.Member"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bm_member
+        <where>
+            is_enabled = 1
+            <if test="platformCode != null">
+                AND platform_code = #{platformCode}
+            </if>
+            <if test="memberName != null">
+                AND member_name = #{memberName}
+            </if>
+            <if test="memberNickname != null">
+                AND member_nickname = #{memberNickname}
+            </if>
+            <if test="memberUuid != null">
+                AND member_uuid = #{memberUuid}
+            </if>
+            <if test="loginName != null">
+                AND login_name = #{loginName}
+            </if>
+            <if test="loginPassword != null">
+                AND login_password = #{loginPassword}
+            </if>
+            <if test="registerPhone != null">
+                AND register_phone = #{registerPhone}
+            </if>
+            <if test="gender != null">
+                AND gender = #{gender}
+            </if>
+            <if test="memberImgUrl != null">
+                AND member_img_url = #{memberImgUrl}
+            </if>
+            <if test="personSignature != null">
+                AND person_signature = #{personSignature}
+            </if>
+            <if test="birthday != null">
+                AND birthday = #{birthday}
+            </if>
+            <if test="memberLevel != null">
+                AND member_level = #{memberLevel}
+            </if>
+            <if test="memberType != null">
+                AND member_type = #{memberType}
+            </if>
+            <if test="authStatus != null">
+                AND auth_status = #{authStatus}
+            </if>
+            <if test="memberStatus != null">
+                AND member_status = #{memberStatus}
+            </if>
+            <if test="memberOrigin != null">
+                AND member_origin = #{memberOrigin}
+            </if>
+            <if test="createTime != null">
+                AND create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                AND update_time = #{updateTime}
+            </if>
+        </where>
+
+    </select>
+
+</mapper>
