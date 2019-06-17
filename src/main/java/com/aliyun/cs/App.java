@@ -4,6 +4,7 @@ package com.aliyun.cs;
  * @author zengzhangni
  * @date 2019/6/13
  */
+
 import com.didispace.swagger.EnableSwagger2Doc;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;

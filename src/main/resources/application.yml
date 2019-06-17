@@ -6,6 +6,17 @@ spring:
     password: adminzzn
   thymeleaf:
     suffix: .jsp
+  redis:
+    host: 139.196.206.94
+    port: 6379
+    password: adminzzn
+    timeout: 5000
+    database: 0
+    jedis:
+      pool:
+        max-idle: 8
+        max-wait:
+        min-idle: 0
 mybatis:
   mapperLocations: classpath:mapper/*.xml
 server:

@@ -1,5 +1,6 @@
 package com.aliyun.cs.controller;
 
+import com.aliyun.cs.config.redis.RedisService;
 import com.aliyun.cs.model.Member;
 import com.aliyun.cs.service.MemberService;
 import com.aliyun.cs.util.ResponseMessage;
@@ -104,5 +105,4 @@ public class MemberController {
     public ResponseMessage<Integer> insert(@RequestBody Member member) {
         return new ResponseMessage<>(this.memberService.addObj(member));
     }
-
 }

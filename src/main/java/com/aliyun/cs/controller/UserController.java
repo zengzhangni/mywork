@@ -1,5 +1,6 @@
 package com.aliyun.cs.controller;
 
+import com.aliyun.cs.config.redis.RedisService;
 import com.aliyun.cs.model.User;
 import com.aliyun.cs.service.UserService;
 import com.aliyun.cs.util.ResponseMessage;
@@ -8,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * @author liyang
@@ -20,6 +22,8 @@ public class UserController {
 
     @Resource
     private UserService userService;
+    @Resource
+    private RedisService redisService;
 
     /**
      * 添加
@@ -38,22 +42,31 @@ public class UserController {
     public ResponseMessage edit(@RequestBody User user) {
         return new ResponseMessage<>(this.userService.modifyObj(user));
     }
-//
-//    /**
-//     * 修改
-//     */
-//    @ApiOperation(value = "redis")
-//    @GetMapping("/cs")
-//    public ResponseMessage cs() {
-//        User user = new User();
-//        user.setUserUuid("147258");
-//        user.setUserName("测试");
-//        user.setUserPhone("159845678");
-//        user.setUserPassword("awdad");
-//        user.setUserImg("54654564564564");
-//        user.setUserAge(20);
-//        user.setUserBirthday(new Date());
-//        redisService.set(user.getUserUuid(), user);
-//        return new ResponseMessage<>("ok");
-//    }
+
+    /**
+     * 修改
+     */
+    @ApiOperation(value = "删除")
+    @PutMapping("/del")
+    public ResponseMessage del() {
+        return new ResponseMessage<>(this.userService.deleteObjById(1));
+    }
+
+    /**
+     * 修改
+     */
+    @ApiOperation(value = "redis")
+    @GetMapping("/cs")
+    public ResponseMessage cs() {
+        User user = new User();
+        user.setUserUuid("147258");
+        user.setUserName("测试");
+        user.setUserPhone("159845678");
+        user.setUserPassword("awdad");
+        user.setUserImg("54654564564564");
+        user.setUserAge(20);
+        user.setUserBirthday(new Date());
+        redisService.set(user.getUserUuid(), user);
+        return new ResponseMessage<>("ok");
+    }
 }
