@@ -11,12 +11,16 @@
     <link rel="stylesheet" type="text/css" href="/css/common.css"/>
     <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css"/>
     <script>
+        var name, pwd, isPwd, yzm;
         $(function () {
             /**
              * 获取验证码
              * */
-            $("#sendButton").click(function () {
-                var name = $("#nameInput").val();
+            $("#sendButton").on("click", function () {
+                name = $("#nameInput").val();
+                if (!name) {
+                    alert("请输入手机号");
+                }
                 $.ajax({
                     type: "get",
                     url: "/user/yzm/" + name,
@@ -30,11 +34,8 @@
             /**
              * 注册
              * */
-            $("#registerButton").click(function () {
-                var name = $("#nameInput").val();
-                var pwd = $("#pwdInput").val();
-                var isPwd = $("#isPwdInput").val();
-                var yzm = $("#yzm").val();
+            $("#registerButton").on("click", function () {
+                yzm = $("#yzm").val();
                 var str = {"userPhone": name, "userPassword": pwd, "yzm": yzm}
                 $.ajax({
                     type: "post",
@@ -54,6 +55,18 @@
                     }
                 });
             })
+
+            /**
+             * 确认密码
+             * */
+            $("#isPwdInput").on("blur", function () {
+                pwd = $("#pwdInput").val();
+                isPwd = $("#isPwdInput").val();
+                if (pwd !== isPwd) {
+                    alert("两次密码不一致!")
+                }
+            })
+
         });
     </script>
 </head>
