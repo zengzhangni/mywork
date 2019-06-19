@@ -72,13 +72,13 @@
                         <span>其它登录方式</span>
                     </div>
                     <div class="right other_right">
-                        <a href="javascript;">
+                        <a href="javascript:;">
                             <img src="/img/wx.png" style="height: 40px;width: 40px;margin-top: 15px"/>
                         </a>
-                        <a href="javascript;">
+                        <a href="javascript:;">
                             <img src="/img/qq.png" style="height: 40px;width: 40px;margin-top: 15px"/>
                         </a>
-                        <a href="javascript;">
+                        <a href="javascript:;">
                             <img src="/img/wb.png" style="height: 40px;width: 40px;margin-top: 15px"/>
                         </a>
                     </div>

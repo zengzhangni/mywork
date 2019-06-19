@@ -97,6 +97,9 @@
                     <div class="form_btn">
                         <button type="button" id="registerButton">注册</button>
                     </div>
+                    <div class="form_reg_btn">
+                        <span>已有帐号! </span><a href="login">去登录</a>
+                    </div>
                     <div style="height: 20px"></div>
                 </form>
             </div>
