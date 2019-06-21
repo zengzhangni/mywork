@@ -47,6 +47,14 @@ public class MemberController {
         return this.memberService.findByPageForFront(pageNo, pageSize, new Member()).getData().getList();
     }
 
+
+    @ApiOperation(value = "会员列表查询")
+    @PostMapping("/pageLists")
+    public ResponseMessage<PageInfo<Member>> pageLists(@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+                                 @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+        return this.memberService.findByPageForFront(pageNo, pageSize, new Member());
+    }
+
     /**
      * 添加美容邦用户表
      *

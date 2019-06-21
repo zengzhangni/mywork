@@ -26,5 +26,10 @@ public class TemplateController {
         return "index";
     }
 
+    @GetMapping("main")
+    public String mainHtml() {
+        return "main";
+    }
+
 
 }

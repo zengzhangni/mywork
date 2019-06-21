@@ -26,6 +26,8 @@ public class MemberServiceImpl extends BaseServiceImpl<Member> implements Member
 
     @Override
     public ResponseMessage<PageInfo<Member>> findByPageForFront(Integer pageNo, Integer pageSize, Member member) {
+        System.out.println(pageNo);
+        System.out.println(pageSize);
         PageHelper.startPage(pageNo, pageSize);
         List<Member> members = memberMapper.selectListByConditions(member);
         return new ResponseMessage<>(new PageInfo<>(members));
