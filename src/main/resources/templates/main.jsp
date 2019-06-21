@@ -65,7 +65,8 @@
                     <el-button type="primary" icon="el-icon-edit">编辑</el-button>
                     <el-button type="primary" icon="el-icon-delete">删除</el-button>
                     <el-button type="primary" icon="el-icon-search">搜索</el-button>
-                    <el-button type="primary">上传<i class="el-icon-upload el-icon--right"></i></el-button>
+                    <el-button @click="dialogUploadVisible = true" type="primary">上传<i
+                            class="el-icon-upload el-icon--right"></i></el-button>
                 </div>
                 <el-dropdown>
                     <i class="el-icon-setting" style="margin-right: 15px"></i>
@@ -130,6 +131,25 @@
             <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
         </div>
     </el-dialog>
+    <el-dialog title="文件上传" :visible.sync="dialogUploadVisible" width="400px">
+        <div >
+            <el-upload
+                    class="upload-demo"
+                    drag
+                    action="/upload/uploadFile"
+                    :on-success="uploadSuccess"
+                    multiple>
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text"><em>点击上传</em></div>
+                <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+            </el-upload>
+        </div>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        </div>
+    </el-dialog>
+
 
 </div>
 <script type="text/javascript">
@@ -141,8 +161,10 @@
             pageNo: 1,
             pageSize: 10,
             total: 0,
-            //新增表格开关
-            dialogFormVisible: true,
+            //新增开关
+            dialogFormVisible: false,
+            //上传
+            dialogUploadVisible: false,
             member: {
                 memberName: '',
                 registerPhone: '',
@@ -177,6 +199,9 @@
 
             },
             handleClose() {
+            },
+            uploadSuccess(response){
+              console.log(response)
             }
         }
     })
