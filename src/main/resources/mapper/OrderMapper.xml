@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aliyun.cs.mapper.OrderMapper">
+    <resultMap id="BaseResultMap" type="com.aliyun.cs.model.Order">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="order_no" jdbcType="VARCHAR" property="orderNo"/>
+        <result column="member_uuid" jdbcType="VARCHAR" property="memberUuid"/>
+        <result column="product_id" jdbcType="VARCHAR" property="productId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,
+        order_no,
+        member_uuid,
+        product_id,
+        create_time,
+        update_time
+    </sql>
+    <!-- 根据主键查询数据 所有数据 -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        t_order
+        where
+        1 = 1
+        and id = #{id}
+    </select>
+    <select id="queryByMemberUuid" resultType="java.lang.Integer">
+        select
+          product_id
+        from
+        t_order
+        where
+        member_uuid = #{memberUuid}
+    </select>
+
+
+    <insert id="addOrder">
+        insert into
+        t_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="orderNo != null">
+                order_no,
+            </if>
+            <if test="memberUuid != null">
+                member_uuid,
+            </if>
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="orderNo != null">
+                #{orderNo},
+            </if>
+            <if test="memberUuid != null">
+                #{memberUuid},
+            </if>
+            <if test="productId != null">
+                #{productId},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime}
+            </if>
+        </trim>
+    </insert>
+</mapper>

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aliyun.cs.mapper.ScheduleJobMapper">
+    <resultMap id="BaseResultMap" type="com.aliyun.cs.model.ScheduleJob">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="job_name" jdbcType="VARCHAR" property="jobName"/>
+        <result column="job_code" jdbcType="VARCHAR" property="jobCode"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="job_class" jdbcType="VARCHAR" property="jobClass"/>
+        <result column="job_method" jdbcType="VARCHAR" property="jobMethod"/>
+        <result column="job_state" jdbcType="TINYINT" property="jobState"/>
+        <result column="cron" jdbcType="VARCHAR" property="cron"/>
+        <result column="is_enable" jdbcType="TINYINT" property="isEnable"/>
+        <result column="is_concurrent" jdbcType="TINYINT" property="isConcurrent"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, job_name,
+        job_code,
+        description,
+        job_class,
+        job_method,
+        job_state,
+        cron,
+        is_enable,
+        is_concurrent,
+        create_time,
+        update_time
+    </sql>
+    <!-- 根据主键查询 -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from schedule_job
+        where id = #{id}
+    </select>
+    <!-- 根据主键删除 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from schedule_job
+        where id = #{id}
+    </delete>
+    <!-- 添加 -->
+    <insert id="insertSelective" parameterType="com.aliyun.cs.model.ScheduleJob">
+        insert into schedule_job
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="jobName != null">
+                job_name,
+            </if>
+            <if test="jobCode != null">
+                job_code,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="jobClass != null">
+                job_class,
+            </if>
+            <if test="jobMethod != null">
+                job_method,
+            </if>
+            <if test="jobState != null">
+                job_state,
+            </if>
+            <if test="cronExpression != null">
+                cron,
+            </if>
+            <if test="isEnable != null">
+                is_enable,
+            </if>
+            <if test="isConcurrent != null">
+                is_concurrent,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="jobName != null">
+                #{jobName,jdbcType=VARCHAR},
+            </if>
+            <if test="jobCode != null">
+                #{jobCode,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="jobClass != null">
+                #{jobClass,jdbcType=VARCHAR},
+            </if>
+            <if test="jobMethod != null">
+                #{jobMethod,jdbcType=VARCHAR},
+            </if>
+            <if test="jobState != null">
+                #{jobState,jdbcType=TINYINT},
+            </if>
+            <if test="cronExpression != null">
+                #{cronExpression,jdbcType=VARCHAR},
+            </if>
+            <if test="isEnable != null">
+                #{isEnable,jdbcType=TINYINT},
+            </if>
+            <if test="isConcurrent != null">
+                #{isConcurrent,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据主键修改 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.aliyun.cs.model.ScheduleJob">
+        update schedule_job
+        <set>
+            <if test="jobName != null">
+                job_name = #{jobName,jdbcType=VARCHAR},
+            </if>
+            <if test="jobCode != null">
+                job_code = #{jobCode,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="jobClass != null">
+                job_class = #{jobClass,jdbcType=VARCHAR},
+            </if>
+            <if test="jobMethod != null">
+                job_method = #{jobMethod,jdbcType=VARCHAR},
+            </if>
+            <if test="jobState != null">
+                job_state = #{jobState,jdbcType=TINYINT},
+            </if>
+            <if test="cronExpression != null">
+                cron = #{cronExpression,jdbcType=VARCHAR},
+            </if>
+            <if test="isEnable != null">
+                is_enable = #{isEnable,jdbcType=TINYINT},
+            </if>
+            <if test="isConcurrent != null">
+                is_concurrent = #{isConcurrent,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <!-- 查询所有 -->
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM schedule_job
+    </select>
+
+    <!-- 更改任务状态 -->
+    <update id="updateJobState">
+        update
+            schedule_job
+        set
+            job_state = #{jobState,jdbcType=TINYINT}
+        where
+            job_class = #{jobClass,jdbcType=VARCHAR}
+    </update>
+    <!-- 根据job_class删除 -->
+    <delete id="deleteByJobClass" parameterType="String">
+        delete from schedule_job
+        where job_class = #{jobClass,jdbcType=VARCHAR}
+    </delete>
+</mapper>

@@ -1,16 +1,15 @@
 package com.aliyun.cs.utils.base;
 
+import com.github.pagehelper.PageInfo;
 
-/**
- * Created by GaoWei on 2017/9/7.
- */
 public interface BaseService<T> {
-     ResponseMessage<T> addObj(T t);
+    int addObj(T t);
 
-     ResponseMessage<T> deleteObjById(int id);
+    int deleteObjById(int id);
 
-     ResponseMessage<T> modifyObj(T t);
+    int modifyObj(T t);
 
-     ResponseMessage<T> queryObjById(int id);
+    T queryObjById(int id);
 
+    PageInfo<T> findByPageForFront(Integer pageNo, Integer pageSize, T t);
 }

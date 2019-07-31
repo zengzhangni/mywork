@@ -147,16 +147,6 @@
         1 = 1
         and id = #{id}
     </select>
-    <select id="queryByPhoneAndPwd" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from
-        t_user
-        where
-        user_phone = #{userPhone}
-        AND
-        user_password =#{userPassword}
-    </select>
     <!-- 根据主键修改数据 字段为空不修改 所有数据 -->
     <update id="updateByPrimaryKeySelective" parameterType="com.aliyun.cs.model.User">
         update

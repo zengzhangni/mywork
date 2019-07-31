@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aliyun.cs.mapper.RecommendMapper">
+    <resultMap id="BaseResultMap" type="com.aliyun.cs.model.Recommend">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="member_uuid" jdbcType="VARCHAR" property="memberUuid"/>
+        <result column="product_id_list" jdbcType="VARCHAR" property="productIdList"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,
+        member_uuid,
+        product_id_list,
+        create_time,
+        update_time
+    </sql>
+    <!-- 往表中插入一条数据 字段为空不插入 系统字段需要输入 -->
+    <insert id="insertSelective" parameterType="com.aliyun.cs.model.Recommend">
+        insert into
+        t_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="memberUuid != null">
+                member_uuid,
+            </if>
+            <if test="productIdList != null">
+                product_id_list,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="productIdList != null">
+                #{productIdList,jdbcType=VARCHAR},
+            </if>
+            <if test="memberUuid != null">
+                #{memberUuid,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <!-- 往表中批量插入数据 字段为空不插入 系统字段需要输入 -->
+    <insert id="insertListSelective" parameterType="java.util.List">
+        insert into
+        t_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="memberUuid != null">
+                member_uuid,
+            </if>
+            <if test="productIdList != null">
+                product_id_list,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <foreach collection="list" item="item" open="values (" close=")" separator=" ), ( ">
+            <trim suffixOverrides=",">
+                <if test="item.id != null">
+                    #{item.id,jdbcType=INTEGER},
+                </if>
+                <if test="item.orderNo != null">
+                    #{item.orderNo,jdbcType=VARCHAR},
+                </if>
+                <if test="item.memberUuid != null">
+                    #{item.memberUuid,jdbcType=VARCHAR},
+                </if>
+                <if test="item.memberNickName != null">
+                    #{item.memberNickName,jdbcType=VARCHAR},
+                </if>
+                <if test="item.memberPhone != null">
+                    #{item.memberPhone,jdbcType=VARCHAR},
+                </if>
+                <if test="item.amountTotal != null">
+                    #{item.amountTotal,jdbcType=INTEGER},
+                </if>
+                <if test="item.needPay != null">
+                    #{item.needPay,jdbcType=INTEGER},
+                </if>
+                <if test="item.amountPay != null">
+                    #{item.amountPay,jdbcType=INTEGER},
+                </if>
+                <if test="item.payType != null">
+                    #{item.payType,jdbcType=VARCHAR},
+                </if>
+                <if test="item.payChannel != null">
+                    #{item.payChannel,jdbcType=VARCHAR},
+                </if>
+                <if test="item.billTime != null">
+                    #{item.billTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.payTime != null">
+                    #{item.payTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.orderStatus != null">
+                    #{item.orderStatus,jdbcType=INTEGER},
+                </if>
+                <if test="item.returnStatus != null">
+                    #{item.returnStatus,jdbcType=INTEGER},
+                </if>
+                <if test="item.returnTime != null">
+                    #{item.returnTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.primaryCoverage != null">
+                    #{item.primaryCoverage,jdbcType=VARCHAR},
+                </if>
+                <if test="item.remark != null">
+                    #{item.remark,jdbcType=VARCHAR},
+                </if>
+                <if test="item.isEnabled != null">
+                    #{item.isEnabled,jdbcType=TINYINT},
+                </if>
+                <if test="item.createTime != null">
+                    #{item.createTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.updateTime != null">
+                    #{item.updateTime,jdbcType=TIMESTAMP},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+    <select id="getByMemberUuid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        t_recommend
+        where
+        member_uuid = #{memberUuid}
+    </select>
+</mapper>

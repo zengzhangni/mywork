@@ -1,16 +1,14 @@
 package com.aliyun.cs.utils.base;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * BaseService 实现
- *
- * @author zengzhangni
- * @date 2019/4/28
- */
+import java.util.List;
+
 @Transactional(rollbackFor = Exception.class)
-public class BaseServiceImpl<T> implements SpringCloudBaseService<T> {
+public class BaseServiceImpl<T> implements BaseService<T> {
 
     @Autowired
     private BaseMapper<T> baseMapper;
@@ -57,6 +55,13 @@ public class BaseServiceImpl<T> implements SpringCloudBaseService<T> {
     @Override
     public T queryObjById(int id) {
         return this.baseMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public PageInfo<T> findByPageForFront(Integer pageNo, Integer pageSize, T t) {
+        PageHelper.startPage(pageNo, pageSize);
+        List<T> list = baseMapper.selectListByConditions(t);
+        return new PageInfo<>(list);
     }
 
 

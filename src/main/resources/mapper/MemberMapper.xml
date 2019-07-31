@@ -3,8 +3,6 @@
 <mapper namespace="com.aliyun.cs.mapper.MemberMapper">
     <resultMap id="BaseResultMap" type="com.aliyun.cs.model.Member">
         <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="platform_code" jdbcType="VARCHAR" property="platformCode"/>
-        <result column="member_name" jdbcType="VARCHAR" property="memberName"/>
         <result column="member_nickname" jdbcType="VARCHAR" property="memberNickname"/>
         <result column="member_uuid" jdbcType="VARCHAR" property="memberUuid"/>
         <result column="login_name" jdbcType="VARCHAR" property="loginName"/>
@@ -14,19 +12,13 @@
         <result column="member_img_url" jdbcType="VARCHAR" property="memberImgUrl"/>
         <result column="person_signature" jdbcType="VARCHAR" property="personSignature"/>
         <result column="birthday" jdbcType="TIMESTAMP" property="birthday"/>
-        <result column="member_level" jdbcType="VARCHAR" property="memberLevel"/>
-        <result column="member_type" jdbcType="INTEGER" property="memberType"/>
-        <result column="auth_status" jdbcType="INTEGER" property="authStatus"/>
         <result column="member_status" jdbcType="INTEGER" property="memberStatus"/>
-        <result column="member_origin" jdbcType="INTEGER" property="memberOrigin"/>
         <result column="is_enabled" jdbcType="TINYINT" property="isEnabled"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
     <sql id="Base_Column_List">
         id,
-        platform_code,
-        member_name,
         member_nickname,
         member_uuid,
         login_name,
@@ -36,11 +28,7 @@
         member_img_url,
         person_signature,
         birthday,
-        member_level,
-        member_type,
-        auth_status,
         member_status,
-        member_origin,
         is_enabled,
         create_time,
         update_time
@@ -48,13 +36,10 @@
     <!-- 往表中插入一条数据 字段为空不插入 系统字段需要输入 -->
     <insert id="insertSelective" parameterType="com.aliyun.cs.model.Member">
         insert into
-        bm_member
+        t_member
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="platformCode != null">
-                platform_code,
-            </if>
-            <if test="memberName != null">
-                member_name,
+            <if test="id != null">
+                id,
             </if>
             <if test="memberNickname != null">
                 member_nickname,
@@ -83,20 +68,8 @@
             <if test="birthday != null">
                 birthday,
             </if>
-            <if test="memberLevel != null">
-                member_level,
-            </if>
-            <if test="memberType != null">
-                member_type,
-            </if>
-            <if test="authStatus != null">
-                auth_status,
-            </if>
             <if test="memberStatus != null">
                 member_status,
-            </if>
-            <if test="memberOrigin != null">
-                member_origin,
             </if>
             <if test="isEnabled != null">
                 is_enabled,
@@ -109,11 +82,8 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="platformCode != null">
-                #{platformCode,jdbcType=VARCHAR},
-            </if>
-            <if test="memberName != null">
-                #{memberName,jdbcType=VARCHAR},
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
             </if>
             <if test="memberNickname != null">
                 #{memberNickname,jdbcType=VARCHAR},
@@ -142,20 +112,8 @@
             <if test="birthday != null">
                 #{birthday,jdbcType=TIMESTAMP},
             </if>
-            <if test="memberLevel != null">
-                #{memberLevel,jdbcType=VARCHAR},
-            </if>
-            <if test="memberType != null">
-                #{memberType},
-            </if>
-            <if test="authStatus != null">
-                #{authStatus},
-            </if>
             <if test="memberStatus != null">
-                #{memberStatus},
-            </if>
-            <if test="memberOrigin != null">
-                #{memberOrigin},
+                #{memberStatus,jdbcType=INTEGER},
             </if>
             <if test="isEnabled != null">
                 #{isEnabled,jdbcType=TINYINT},
@@ -168,31 +126,118 @@
             </if>
         </trim>
     </insert>
-
+    <!-- 往表中批量插入数据 字段为空不插入 系统字段需要输入 -->
+    <insert id="insertListSelective" parameterType="java.util.List">
+        insert into
+        t_member
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="memberNickname != null">
+                member_nickname,
+            </if>
+            <if test="memberUuid != null">
+                member_uuid,
+            </if>
+            <if test="loginName != null">
+                login_name,
+            </if>
+            <if test="loginPassword != null">
+                login_password,
+            </if>
+            <if test="registerPhone != null">
+                register_phone,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="memberImgUrl != null">
+                member_img_url,
+            </if>
+            <if test="personSignature != null">
+                person_signature,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="memberStatus != null">
+                member_status,
+            </if>
+            <if test="isEnabled != null">
+                is_enabled,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <foreach collection="list" item="item" open="values (" close=")" separator=" ), ( ">
+            <trim suffixOverrides=",">
+                <if test="item.id != null">
+                    #{item.id,jdbcType=INTEGER},
+                </if>
+                <if test="item.memberNickname != null">
+                    #{item.memberNickname,jdbcType=VARCHAR},
+                </if>
+                <if test="item.memberUuid != null">
+                    #{item.memberUuid,jdbcType=VARCHAR},
+                </if>
+                <if test="item.loginName != null">
+                    #{item.loginName,jdbcType=VARCHAR},
+                </if>
+                <if test="item.loginPassword != null">
+                    #{item.loginPassword,jdbcType=VARCHAR},
+                </if>
+                <if test="item.registerPhone != null">
+                    #{item.registerPhone,jdbcType=VARCHAR},
+                </if>
+                <if test="item.gender != null">
+                    #{item.gender,jdbcType=TINYINT},
+                </if>
+                <if test="item.memberImgUrl != null">
+                    #{item.memberImgUrl,jdbcType=VARCHAR},
+                </if>
+                <if test="item.personSignature != null">
+                    #{item.personSignature,jdbcType=VARCHAR},
+                </if>
+                <if test="item.birthday != null">
+                    #{item.birthday,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.memberStatus != null">
+                    #{item.memberStatus,jdbcType=INTEGER},
+                </if>
+                <if test="item.isEnabled != null">
+                    #{item.isEnabled,jdbcType=TINYINT},
+                </if>
+                <if test="item.createTime != null">
+                    #{item.createTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.updateTime != null">
+                    #{item.updateTime,jdbcType=TIMESTAMP},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
     <!-- 根据主键查询数据 所有数据 -->
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from
-        bm_member
+        t_member
         where
-        id = #{id}
+        1 = 1
+        and id = #{id}
     </select>
-
     <!-- 分页用 查询所有数据 -->
     <select id="selectListByConditions" parameterType="com.aliyun.cs.model.Member"
             resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from bm_member
+        from t_member
         <where>
-            is_enabled = 1
-            <if test="platformCode != null">
-                AND platform_code = #{platformCode}
-            </if>
-            <if test="memberName != null">
-                AND member_name = #{memberName}
-            </if>
             <if test="memberNickname != null">
                 AND member_nickname = #{memberNickname}
             </if>
@@ -220,20 +265,8 @@
             <if test="birthday != null">
                 AND birthday = #{birthday}
             </if>
-            <if test="memberLevel != null">
-                AND member_level = #{memberLevel}
-            </if>
-            <if test="memberType != null">
-                AND member_type = #{memberType}
-            </if>
-            <if test="authStatus != null">
-                AND auth_status = #{authStatus}
-            </if>
             <if test="memberStatus != null">
                 AND member_status = #{memberStatus}
-            </if>
-            <if test="memberOrigin != null">
-                AND member_origin = #{memberOrigin}
             </if>
             <if test="createTime != null">
                 AND create_time = #{createTime}
@@ -242,7 +275,93 @@
                 AND update_time = #{updateTime}
             </if>
         </where>
-
+    </select>
+    <!-- 分页用 查询所有数据 -->
+    <select id="findByPageForFront" parameterType="string" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_member
+        <where>
+            <if test="keyWord != null">
+                member_nickname like concat('%',#{keyWord},'%')
+                or
+                register_phone like concat('%',#{keyWord},'%')
+            </if>
+        </where>
+    </select>
+    <select id="findByConditions" resultMap="BaseResultMap">
+        select
+            id,
+            member_nickname,
+            member_uuid,
+            login_name,
+            login_password,
+            register_phone,
+            gender,
+            member_img_url,
+            person_signature,
+            birthday
+        from t_member
     </select>
 
+    <!-- 根据主键修改数据 字段为空不修改 所有数据 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.aliyun.cs.model.Member">
+        update
+        t_member
+        <set>
+            <if test="id != null">
+                id = #{id,jdbcType=INTEGER},
+            </if>
+            <if test="memberNickname != null">
+                member_nickname = #{memberNickname,jdbcType=VARCHAR},
+            </if>
+            <if test="memberUuid != null">
+                member_uuid = #{memberUuid,jdbcType=VARCHAR},
+            </if>
+            <if test="loginName != null">
+                login_name = #{loginName,jdbcType=VARCHAR},
+            </if>
+            <if test="loginPassword != null">
+                login_password = #{loginPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="registerPhone != null">
+                register_phone = #{registerPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=TINYINT},
+            </if>
+            <if test="memberImgUrl != null">
+                member_img_url = #{memberImgUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="personSignature != null">
+                person_signature = #{personSignature,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=TIMESTAMP},
+            </if>
+            <if test="memberStatus != null">
+                member_status = #{memberStatus,jdbcType=INTEGER},
+            </if>
+            <if test="isEnabled != null">
+                is_enabled = #{isEnabled,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where
+        1 = 1
+        and id = #{id,jdbcType=INTEGER}
+    </update>
+    <!-- 根据主键删除数据 物理删除 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from
+            t_member
+        where
+            1 = 1
+        and id = #{id}
+    </delete>
 </mapper>
